@@ -4,8 +4,13 @@
  */
 package agents;
 
-import behaviors.TriquiMinimax;
+import models.TriquiMinimax;
 import jade.core.Agent;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
 /**
  *
@@ -19,8 +24,24 @@ public class Robot extends Agent {
         if (args != null && args.length > 0) {
             String params = (String) args[0];
             TriquiMinimax triqui = new TriquiMinimax(params);
-            System.out.println(triqui.bestMove());
+            String message = triqui.bestMove();
+            try {
+                sendMessage(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    protected void sendMessage(String message) throws Exception {
+        HttpPost post = new HttpPost("http://localhost:5000/voice");
+        post.setHeader("Content-Type", "application/json");
+        StringEntity entity = new StringEntity(message);
+        post.setEntity(entity);
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = httpClient.execute(post);
+
     }
 
 }
