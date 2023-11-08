@@ -43,7 +43,7 @@ public class AgentController implements HttpHandler {
             try {
 
                 jade.wrapper.AgentController agent = container.createNewAgent("Robot1", "agents.Robot", new Object[]{postData});
-              
+
                 agent.start();
 
             } catch (StaleProxyException e) {

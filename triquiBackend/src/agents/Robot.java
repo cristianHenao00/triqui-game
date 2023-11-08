@@ -24,7 +24,6 @@ public class Robot extends Agent {
         if (args != null && args.length > 0) {
             String params = (String) args[0];
             TriquiMinimax triqui = new TriquiMinimax(params);
-            String message = triqui.bestMove();
             try {
                 sendMessage(message);
             } catch (Exception e) {
