@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package behaviors;
+package models;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,18 +28,18 @@ public class TriquiMinimax {
     public String bestMove() {
         String[][] board = changeJson();
         int[] move = findBestMove(board);
-        
+
         String winner = checkWinner(board);
         if (!winner.equals(" ")) {
             if (winner.equals("X")) {
-                return "¡El ganador es: X!";
+                return "{\"message\": \"El ganador es 'X'\"}";
             } else if (winner.equals("O")) {
-                return "¡El ganador es: O!";
+                return "{\"message\": \"El ganador es 'O'\"}";
             } else if (winner.equals("T")) {
-                return "¡Es un empate!";
+                return "{\"message\": \"Es un empate\"}";
             }
         }
-        return "Mi jugada es en la fila: " + move[0] + " columna: " + move[1];
+        return "{\"message\": \"Mi jugada es en la fila: " + move[0] + " columna: " + move[1] + "\"}";
     }
 
     /**
