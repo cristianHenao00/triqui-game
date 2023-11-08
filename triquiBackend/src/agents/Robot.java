@@ -4,7 +4,7 @@
  */
 package agents;
 
-import models.TriquiMinimax;
+import behaviors.TriquiMinimax;
 import jade.core.Agent;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -24,6 +24,7 @@ public class Robot extends Agent {
         if (args != null && args.length > 0) {
             String params = (String) args[0];
             TriquiMinimax triqui = new TriquiMinimax(params);
+            String message = triqui.bestMove();
             try {
                 sendMessage(message);
             } catch (Exception e) {
