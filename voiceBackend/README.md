@@ -37,5 +37,5 @@ pip install -r requirements.txt
 Una vez que hayas configurado el entorno virtual y hayas instalado los requisitos, puedes ejecutar tu proyecto Python.
 
 ```bash
-python main.py
+python audio.py
 ```
