@@ -31,15 +31,15 @@ public class TriquiMinimax {
 
         String winner = checkWinner(board);
         if (!winner.equals(" ")) {
-            if (winner.equals("X")) {
-                return "{\"message\": \"El ganador es 'X'\"}";
-            } else if (winner.equals("O")) {
-                return "{\"message\": \"El ganador es 'O'\"}";
-            } else if (winner.equals("T")) {
+            if (winner.equals("T")) {
+                return "{\"message\": \"El ganador es 'T'\"}";
+            } else if (winner.equals("C")) {
+                return "{\"message\": \"El ganador es 'C'\"}";
+            } else if (winner.equals("X")) {
                 return "{\"message\": \"Es un empate\"}";
             }
         }
-        return "{\"message\": \"Mi jugada es en la fila: " + move[0] + " columna: " + move[1] + "\"}";
+        return "{\"message\": \"Mi movimiento es en la columna: " + move[1] + "\"}";
     }
 
     /**
@@ -59,7 +59,7 @@ public class TriquiMinimax {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (boardGame[i][j].equals(" ")) {
-                    boardGame[i][j] = "O";
+                    boardGame[i][j] = "C";
                     int moveValue = minimax(boardGame, 0, false, alpha, beta);
                     boardGame[i][j] = " ";
 
@@ -89,11 +89,11 @@ public class TriquiMinimax {
      */
     protected int minimax(String[][] board, int depth, boolean isMaximizingPlayer, int alpha, int beta) {
         String result = checkWinner(board);
-        if (result.equals("O")) {
+        if (result.equals("C")) {
             return 1;
-        } else if (result.equals("X")) {
+        } else if (result.equals("T")) {
             return -1;
-        } else if (result.equals("T") || depth == 2) {
+        } else if (result.equals("X") || depth == 2) {
             return 0;
         }
 
@@ -102,7 +102,7 @@ public class TriquiMinimax {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (board[i][j].equals(" ")) {
-                        board[i][j] = "O";
+                        board[i][j] = "C";
                         int moveValue = minimax(board, depth + 1, false, alpha, beta);
                         board[i][j] = " ";
                         bestValue = Math.max(bestValue, moveValue);
@@ -119,7 +119,7 @@ public class TriquiMinimax {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (board[i][j].equals(" ")) {
-                        board[i][j] = "X";
+                        board[i][j] = "T";
                         int moveValue = minimax(board, depth + 1, true, alpha, beta);
                         board[i][j] = " ";
                         bestValue = Math.min(bestValue, moveValue);
@@ -140,7 +140,7 @@ public class TriquiMinimax {
      *
      * @param board, tablero actual del juego
      *
-     * @return el simbolo del ganador "X", "O" o "T" si es empate
+     * @return el simbolo del ganador "T", "C" o "X" si es empate
      */
     protected String checkWinner(String[][] board) {
         for (int i = 0; i < 3; i++) {
@@ -163,7 +163,7 @@ public class TriquiMinimax {
             }
         }
 
-        return "T";
+        return "X";
     }
 
     /**
@@ -187,21 +187,4 @@ public class TriquiMinimax {
 
         return board;
     }
-
-    /**
-     * Método para actualizar el tablero después del movimiento del jugador
-     * computadora
-     *
-     * @param board, tablero que llega por evento POST
-     * @param move, coordenada del mejor movimiento de la computadora
-     *
-     * @return tablero actualizado después del movimiento
-     */
-    protected String[][] makeMove(String[][] board, int[] move) {
-        int row = move[0];
-        int col = move[1];
-        board[row][col] = "X";
-        return board;
-    }
-
 }
